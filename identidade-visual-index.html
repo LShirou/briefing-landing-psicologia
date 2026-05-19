@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionário | Identidade Visual Psicologia</title>
+  <style>
+    :root {
+      --bg: #f7f2ec;
+      --card: #fffaf5;
+      --text: #2f2925;
+      --muted: #746b64;
+      --primary: #7b6658;
+      --primary-dark: #4b372d;
+      --secondary: #d8c3b1;
+      --accent: #a99d8f;
+      --border: #e8dacc;
+      --input: #fffdf9;
+      --shadow: 0 18px 45px rgba(72, 52, 38, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top left, #fff9f2 0, var(--bg) 44%, #eaded1 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 32px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-card,
+    .progress-card,
+    .section,
+    .result-box {
+      background: rgba(255, 250, 245, 0.93);
+      border: 1px solid rgba(232, 218, 204, 0.96);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card {
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -95px;
+      top: -95px;
+      background: rgba(216, 195, 177, 0.44);
+      border-radius: 999px;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: 72px;
+      bottom: -50px;
+      background: rgba(123, 102, 88, 0.12);
+      border-radius: 999px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: #efe2d6;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.95;
+      margin: 0 0 18px;
+      letter-spacing: -0.055em;
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-card {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .progress-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-weight: 900;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: #eadccf;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .mini-info {
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 34px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 850;
+      font-size: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(74, 54, 39, 0.14);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #fffaf4;
+      color: var(--primary-dark);
+      border: 1px solid var(--border);
+    }
+
+    .sections {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section {
+      padding: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .number {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background: var(--primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      margin: 0 0 4px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label,
+    .label {
+      font-weight: 850;
+      font-size: 14px;
+      color: #3d342e;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(123, 102, 88, 0.12);
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      position: relative;
+    }
+
+    .chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .chip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #fffdf9;
+      color: var(--primary-dark);
+      padding: 11px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 780;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip input:checked + span {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 10px 22px rgba(123, 102, 88, 0.22);
+    }
+
+    .examples {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .example-card {
+      border: 1px solid var(--border);
+      background: #fffdf9;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .example-title {
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+    }
+
+    .example-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .palette {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fffdf9;
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      height: 52px;
+    }
+
+    .palette-content {
+      padding: 13px;
+    }
+
+    .palette-content strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--primary-dark);
+    }
+
+    .palette-content span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .result-box {
+      padding: 28px;
+      margin-top: 30px;
+    }
+
+    .result-box h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+    }
+
+    #output {
+      width: 100%;
+      min-height: 280px;
+      white-space: pre-wrap;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      background: #2f2925;
+      color: #fff8ef;
+      border: 0;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 28px 0 0;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .grid,
+      .examples,
+      .palette-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card,
+      .progress-card,
+      .section,
+      .result-box {
+        padding: 24px;
+        border-radius: 22px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .toolbar,
+      .progress-card,
+      .result-box,
+      button {
+        display: none !important;
+      }
+
+      .section,
+      .hero-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="eyebrow">questionário visual</div>
+          <h1>identidade visual para psicologia</h1>
+          <p>Este questionário vai ajudar a definir a direção visual da marca: cores, fontes, estilo, referências e ideias para criação de um ícone ou símbolo profissional.</p>
+        </div>
+
+        <aside class="progress-card">
+          <div class="progress-title">
+            <span>progresso das respostas</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="mini-info">
+            <span>• responda pensando na imagem que deseja transmitir</span>
+            <span>• links de referências, imagens e perfis ajudam bastante</span>
+            <span>• ao finalizar, gere um resumo organizado das respostas</span>
+          </div>
+        </aside>
+      </section>
+
+      <div class="toolbar">
+        <button class="btn-primary" onclick="generateBriefing()">Gerar resumo das respostas</button>
+        <button class="btn-secondary" onclick="copyBriefing()">Copiar respostas</button>
+        <button class="btn-secondary" onclick="downloadBriefing()">Baixar respostas .txt</button>
+        <button class="btn-secondary" onclick="window.print()">Imprimir / salvar PDF</button>
+        <button class="btn-secondary" onclick="resetForm()">Limpar respostas</button>
+      </div>
+
+      <form id="briefingForm" class="sections">
+        <section class="section">
+          <div class="section-header">
+            <div class="number">1</div>
+            <div>
+              <h2>percepção da marca</h2>
+              <p class="section-desc">Comece definindo a sensação que a identidade visual deve transmitir.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Quais sensações você gostaria que sua marca transmitisse?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Acolhimento"><span>Acolhimento</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Confiança"><span>Confiança</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Seriedade"><span>Seriedade</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Leveza"><span>Leveza</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Cuidado"><span>Cuidado</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Humanização"><span>Humanização</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Sofisticação"><span>Sofisticação</span></label>
+                <label class="chip"><input type="checkbox" name="Sensações da marca" value="Modernidade"><span>Modernidade</span></label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="personalidade">Se a sua marca fosse uma pessoa, como ela seria?</label>
+              <textarea id="personalidade" name="Personalidade da marca" placeholder="Ex.: calma, acolhedora, profissional, gentil, direta, elegante..."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="tomVisual">Qual direção visual parece mais adequada?</label>
+              <select id="tomVisual" name="Direção visual principal">
+                <option value="">Selecione</option>
+                <option>Mais delicada e acolhedora</option>
+                <option>Mais séria e profissional</option>
+                <option>Mais moderna e minimalista</option>
+                <option>Mais sofisticada e elegante</option>
+                <option>Mais leve e humana</option>
+                <option>Ainda não sei</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="evitarSensacao">Existe alguma sensação que você quer evitar?</label>
+              <input id="evitarSensacao" name="Sensações a evitar" type="text" placeholder="Ex.: infantil, frio, hospitalar, chamativo..." />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">2</div>
+            <div>
+              <h2>preferências de cores</h2>
+              <p class="section-desc">Escolha cores e paletas que combinam com a imagem que você deseja transmitir.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Paletas sugeridas para psicologia</div>
+              <div class="palette-grid">
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Verde sálvia, areia, off-white e marrom claro" hidden>
+                  <div class="swatches">
+                    <span style="background:#9aa88f"></span><span style="background:#efe5d6"></span><span style="background:#fffaf3"></span><span style="background:#8a6f5d"></span>
+                  </div>
+                  <div class="palette-content"><strong>natural e acolhedora</strong><span>verde sálvia, areia, off-white e marrom claro</span></div>
+                </label>
+
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Azul acinzentado, bege, branco quente e grafite" hidden>
+                  <div class="swatches">
+                    <span style="background:#7f98a6"></span><span style="background:#e8d8c7"></span><span style="background:#fffaf2"></span><span style="background:#34383b"></span>
+                  </div>
+                  <div class="palette-content"><strong>calma e profissional</strong><span>azul acinzentado, bege, branco quente e grafite</span></div>
+                </label>
+
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Rosa queimado, terracota suave, creme e vinho fechado" hidden>
+                  <div class="swatches">
+                    <span style="background:#c68f86"></span><span style="background:#b77a62"></span><span style="background:#f7eadc"></span><span style="background:#684148"></span>
+                  </div>
+                  <div class="palette-content"><strong>humana e sensível</strong><span>rosa queimado, terracota suave, creme e vinho fechado</span></div>
+                </label>
+
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Lavanda, lilás acinzentado, bege e marrom escuro" hidden>
+                  <div class="swatches">
+                    <span style="background:#b7a7c7"></span><span style="background:#8f8199"></span><span style="background:#eadccf"></span><span style="background:#4b3b34"></span>
+                  </div>
+                  <div class="palette-content"><strong>serena e delicada</strong><span>lavanda, lilás acinzentado, bege e marrom escuro</span></div>
+                </label>
+
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Nude, caramelo, marrom, off-white" hidden>
+                  <div class="swatches">
+                    <span style="background:#d7b59e"></span><span style="background:#b6835e"></span><span style="background:#6a4b3a"></span><span style="background:#fff8ee"></span>
+                  </div>
+                  <div class="palette-content"><strong>elegante e neutra</strong><span>nude, caramelo, marrom e off-white</span></div>
+                </label>
+
+                <label class="palette">
+                  <input type="radio" name="Paleta sugerida" value="Prefiro outra paleta" hidden>
+                  <div class="swatches">
+                    <span style="background:#d9d9d9"></span><span style="background:#f4f4f4"></span><span style="background:#9c9c9c"></span><span style="background:#575757"></span>
+                  </div>
+                  <div class="palette-content"><strong>outra paleta</strong><span>descrever abaixo ou enviar referências</span></div>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="coresGostam">Quais cores você gosta?</label>
+              <input id="coresGostam" name="Cores que gosta" type="text" placeholder="Ex.: verde, bege, azul, lilás..." />
+            </div>
+
+            <div class="field">
+              <label for="coresNaoGostam">Quais cores você não gostaria de usar?</label>
+              <input id="coresNaoGostam" name="Cores que não gosta" type="text" placeholder="Ex.: vermelho, preto, amarelo forte..." />
+            </div>
+
+            <div class="field full">
+              <label for="outraPaleta">Caso tenha outra paleta em mente, descreva aqui ou cole links de referência</label>
+              <textarea id="outraPaleta" name="Outra paleta ou referência de cor" placeholder="Você pode descrever as cores ou colar links de imagens, sites, perfis, paletas do Pinterest etc."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">3</div>
+            <div>
+              <h2>preferências de fontes</h2>
+              <p class="section-desc">Escolha estilos tipográficos que combinem com sua personalidade profissional.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Exemplos de estilos de fonte que podem combinar com psicologia</div>
+              <div class="examples">
+                <div class="example-card">
+                  <div class="example-title" style="font-family: Georgia, serif; font-size: 24px;">Serifada elegante</div>
+                  <p>Transmite sofisticação, sensibilidade e presença mais autoral.</p>
+                </div>
+                <div class="example-card">
+                  <div class="example-title" style="font-family: Arial, sans-serif; font-size: 24px;">Sem serifa clean</div>
+                  <p>Transmite clareza, modernidade, organização e profissionalismo.</p>
+                </div>
+                <div class="example-card">
+                  <div class="example-title" style="font-family: 'Trebuchet MS', sans-serif; font-size: 24px;">Arredondada leve</div>
+                  <p>Transmite acolhimento, proximidade, leveza e cuidado humano.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="field full">
+              <div class="label">Qual estilo de fonte você prefere?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Serifada elegante"><span>Serifada elegante</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Sem serifa moderna"><span>Sem serifa moderna</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Arredondada e acolhedora"><span>Arredondada e acolhedora</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Minimalista"><span>Minimalista</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Clássica"><span>Clássica</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo de fonte preferido" value="Ainda não sei"><span>Ainda não sei</span></label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="fontesReferencia">Se tiver fontes, imagens ou marcas com tipografias que você acha bonitas, cole aqui</label>
+              <textarea id="fontesReferencia" name="Referências de fontes" placeholder="Cole links, nomes de fontes ou descreva exemplos. Se tiver imagens, envie separadamente junto com este questionário."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="fontesEvitar">Existe algum tipo de fonte que você não gostaria de usar?</label>
+              <textarea id="fontesEvitar" name="Fontes a evitar" placeholder="Ex.: fonte muito infantil, muito cursiva, difícil de ler, muito séria..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">4</div>
+            <div>
+              <h2>estilo do logotipo</h2>
+              <p class="section-desc">Defina como você imagina a composição principal da sua marca.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Qual tipo de logotipo você prefere?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Tipo de logotipo" value="Nome escrito com fonte marcante"><span>Nome escrito com fonte marcante</span></label>
+                <label class="chip"><input type="checkbox" name="Tipo de logotipo" value="Nome + ícone"><span>Nome + ícone</span></label>
+                <label class="chip"><input type="checkbox" name="Tipo de logotipo" value="Monograma com iniciais"><span>Monograma com iniciais</span></label>
+                <label class="chip"><input type="checkbox" name="Tipo de logotipo" value="Símbolo abstrato"><span>Símbolo abstrato</span></label>
+                <label class="chip"><input type="checkbox" name="Tipo de logotipo" value="Ainda não sei"><span>Ainda não sei</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="nomeMarca">Qual nome deve aparecer na marca?</label>
+              <input id="nomeMarca" name="Nome que deve aparecer na marca" type="text" placeholder="Ex.: Dra. Nome Sobrenome / Nome Sobrenome Psicóloga" />
+            </div>
+
+            <div class="field">
+              <label for="complementoMarca">Deve aparecer algum complemento?</label>
+              <input id="complementoMarca" name="Complemento da marca" type="text" placeholder="Ex.: Psicóloga Clínica, CRP, Psicoterapia..." />
+            </div>
+
+            <div class="field full">
+              <label for="assinatura">Como você gostaria que a marca fosse percebida?</label>
+              <textarea id="assinatura" name="Percepção desejada para o logotipo" placeholder="Ex.: profissional, humana, elegante, acolhedora, memorável, discreta..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">5</div>
+            <div>
+              <h2>criação do ícone ou símbolo</h2>
+              <p class="section-desc">Estas perguntas ajudam a direcionar um ícone com significado, sem ficar genérico.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Quais ideias poderiam fazer sentido para o símbolo?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Caminho ou jornada"><span>Caminho ou jornada</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Acolhimento"><span>Acolhimento</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Escuta"><span>Escuta</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Equilíbrio"><span>Equilíbrio</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Transformação"><span>Transformação</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Crescimento"><span>Crescimento</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Autoconhecimento"><span>Autoconhecimento</span></label>
+                <label class="chip"><input type="checkbox" name="Ideias para símbolo" value="Conexão humana"><span>Conexão humana</span></label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <div class="label">Elementos visuais que você aceitaria explorar</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Linhas orgânicas"><span>Linhas orgânicas</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Formas circulares"><span>Formas circulares</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Folhas ou natureza"><span>Folhas ou natureza</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Rosto ou perfil humano"><span>Rosto ou perfil humano</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Iniciais do nome"><span>Iniciais do nome</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Símbolo abstrato"><span>Símbolo abstrato</span></label>
+                <label class="chip"><input type="checkbox" name="Elementos visuais para o ícone" value="Traços minimalistas"><span>Traços minimalistas</span></label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="significadoIcone">Existe algum significado pessoal ou profissional que você gostaria de representar no ícone?</label>
+              <textarea id="significadoIcone" name="Significado desejado para o ícone" placeholder="Ex.: acolhimento, escuta, recomeço, leveza, processo terapêutico, equilíbrio emocional..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="evitarIcone">Existe algum símbolo ou elemento que você não quer usar?</label>
+              <textarea id="evitarIcone" name="Elementos a evitar no ícone" placeholder="Ex.: cérebro, borboleta, árvore, coração, símbolo de psi, elementos muito clichês..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">6</div>
+            <div>
+              <h2>referências visuais</h2>
+              <p class="section-desc">Referências ajudam a entender gosto, estilo e caminho visual desejado.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <label for="marcasGostam">Cole links de marcas, perfis ou sites que você gosta</label>
+              <textarea id="marcasGostam" name="Referências que gosta" placeholder="Pode colar links do Instagram, Pinterest, sites, Behance, marcas de psicólogas ou outras áreas."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="motivoGostam">O que você gosta nessas referências?</label>
+              <textarea id="motivoGostam" name="O que gosta nas referências" placeholder="Ex.: cores, fonte, símbolo, delicadeza, organização, elegância, sensação de acolhimento..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="referenciasNaoGostam">Cole links ou descreva estilos que você não gosta</label>
+              <textarea id="referenciasNaoGostam" name="Referências que não gosta" placeholder="Isso ajuda a evitar caminhos visuais indesejados."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">7</div>
+            <div>
+              <h2>aplicações da identidade</h2>
+              <p class="section-desc">Informe onde a identidade visual será usada inicialmente.</p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Onde você pretende usar a identidade visual?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Landing page"><span>Landing page</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Instagram"><span>Instagram</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Cartão de visita"><span>Cartão de visita</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="WhatsApp"><span>WhatsApp</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Receituário ou papel timbrado"><span>Receituário ou papel timbrado</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Posts e templates"><span>Posts e templates</span></label>
+                <label class="chip"><input type="checkbox" name="Aplicações da identidade" value="Assinatura de e-mail"><span>Assinatura de e-mail</span></label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="materiaisPrioritarios">Quais materiais são prioridade neste momento?</label>
+              <textarea id="materiaisPrioritarios" name="Materiais prioritários" placeholder="Ex.: logotipo, paleta, fontes, cartão, Instagram, landing page..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="observacoes">Observações finais</label>
+              <textarea id="observacoes" name="Observações finais" placeholder="Use este espaço para complementar qualquer informação importante."></textarea>
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <section class="result-box">
+        <h2>resumo das respostas</h2>
+        <p class="section-desc">Ao finalizar, clique em “gerar resumo das respostas” para organizar todas as informações preenchidas.</p>
+        <textarea id="output" readonly></textarea>
+      </section>
+
+      <p class="footer-note">Questionário inicial para criação de identidade visual profissional.</p>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('briefingForm');
+    const output = document.getElementById('output');
+    const storageKey = 'briefingIdentidadeVisualPsicologia';
+
+    function getFormData() {
+      const data = {};
+      const elements = Array.from(form.elements);
+
+      elements.forEach((el) => {
+        if (!el.name) return;
+
+        if (el.type === 'checkbox') {
+          if (!data[el.name]) data[el.name] = [];
+          if (el.checked) data[el.name].push(el.value);
+        } else if (el.type === 'radio') {
+          if (el.checked) data[el.name] = el.value;
+          if (!(el.name in data)) data[el.name] = '';
+        } else {
+          data[el.name] = el.value.trim();
+        }
+      });
+
+      return data;
+    }
+
+    function saveForm() {
+      localStorage.setItem(storageKey, JSON.stringify(getFormData()));
+      updateProgress();
+    }
+
+    function loadForm() {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+      const elements = Array.from(form.elements);
+
+      elements.forEach((el) => {
+        if (!el.name || !(el.name in data)) return;
+
+        if (el.type === 'checkbox') {
+          el.checked = Array.isArray(data[el.name]) && data[el.name].includes(el.value);
+        } else if (el.type === 'radio') {
+          el.checked = data[el.name] === el.value;
+        } else {
+          el.value = data[el.name] || '';
+        }
+      });
+
+      updateProgress();
+    }
+
+    function formatValue(value) {
+      if (Array.isArray(value)) return value.length ? value.join(', ') : 'Não informado';
+      return value || 'Não informado';
+    }
+
+    function generateBriefing() {
+      const data = getFormData();
+      const lines = ['RESUMO DAS RESPOSTAS — IDENTIDADE VISUAL PARA PSICOLOGIA', ''];
+
+      Object.entries(data).forEach(([key, value]) => {
+        lines.push(`${key}: ${formatValue(value)}`);
+      });
+
+      output.value = lines.join('\n');
+      saveForm();
+      output.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    async function copyBriefing() {
+      if (!output.value.trim()) generateBriefing();
+      await navigator.clipboard.writeText(output.value);
+      alert('Respostas copiadas!');
+    }
+
+    function downloadBriefing() {
+      if (!output.value.trim()) generateBriefing();
+      const blob = new Blob([output.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'respostas-identidade-visual-psicologia.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function resetForm() {
+      if (!confirm('Tem certeza que deseja limpar todas as respostas?')) return;
+      form.reset();
+      output.value = '';
+      localStorage.removeItem(storageKey);
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const textElements = Array.from(form.elements).filter((el) => el.name && !['checkbox', 'radio'].includes(el.type));
+      const checkboxGroups = [...new Set(Array.from(form.querySelectorAll('input[type="checkbox"]')).map((el) => el.name))];
+      const radioGroups = [...new Set(Array.from(form.querySelectorAll('input[type="radio"]')).map((el) => el.name))];
+
+      const total = textElements.length + checkboxGroups.length + radioGroups.length;
+      let filled = textElements.filter((el) => el.value && el.value.trim() !== '').length;
+
+      checkboxGroups.forEach((name) => {
+        if (form.querySelector(`input[type="checkbox"][name="${CSS.escape(name)}"]:checked`)) filled += 1;
+      });
+
+      radioGroups.forEach((name) => {
+        if (form.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`)) filled += 1;
+      });
+
+      const percent = total ? Math.round((filled / total) * 100) : 0;
+      document.getElementById('progressText').textContent = `${percent}%`;
+      document.getElementById('progressFill').style.width = `${percent}%`;
+    }
+
+    document.querySelectorAll('.palette').forEach((palette) => {
+      palette.addEventListener('click', () => {
+        document.querySelectorAll('.palette').forEach((p) => p.style.boxShadow = 'none');
+        palette.style.boxShadow = '0 14px 28px rgba(123, 102, 88, 0.18)';
+      });
+    });
+
+    form.addEventListener('input', saveForm);
+    form.addEventListener('change', saveForm);
+    window.addEventListener('DOMContentLoaded', loadForm);
+  </script>
+</body>
+</html>
