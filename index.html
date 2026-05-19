@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionário | Landing Page Psicologia</title>
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --card: #fffaf4;
+      --text: #2f2925;
+      --muted: #766b63;
+      --primary: #8b6f5c;
+      --primary-dark: #604738;
+      --secondary: #d8bfa8;
+      --border: #e5d8ca;
+      --input: #fffdf9;
+      --success: #6f8f72;
+      --shadow: 0 18px 45px rgba(74, 54, 39, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top left, #fff8ef 0, var(--bg) 40%, #efe3d6 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .hero-card,
+    .progress-card,
+    .section,
+    .result-box {
+      background: rgba(255, 250, 244, 0.92);
+      border: 1px solid rgba(229, 216, 202, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card {
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      width: 220px;
+      height: 220px;
+      background: rgba(216, 191, 168, 0.42);
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      border-radius: 999px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: #efe1d2;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 0.95;
+      margin: 0 0 18px;
+      letter-spacing: -0.055em;
+      max-width: 760px;
+    }
+
+    .hero-card p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0;
+    }
+
+    .progress-card {
+      padding: 30px;
+    }
+
+    .progress-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-weight: 800;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: #eadccf;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .mini-info {
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 34px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(74, 54, 39, 0.14);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #fffaf4;
+      color: var(--primary-dark);
+      border: 1px solid var(--border);
+    }
+
+    .sections {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section {
+      padding: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .number {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background: var(--primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      margin: 0 0 4px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label,
+    .label {
+      font-weight: 800;
+      font-size: 14px;
+      color: #3d342e;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(139, 111, 92, 0.12);
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      position: relative;
+    }
+
+    .chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .chip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #fffdf9;
+      color: var(--primary-dark);
+      padding: 11px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip input:checked + span {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 10px 22px rgba(139, 111, 92, 0.22);
+    }
+
+    .result-box {
+      padding: 28px;
+      margin-top: 30px;
+    }
+
+    .result-box h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+    }
+
+    #output {
+      width: 100%;
+      min-height: 280px;
+      white-space: pre-wrap;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      background: #2f2925;
+      color: #fff8ef;
+      border: 0;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 28px 0 0;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card,
+      .progress-card,
+      .section,
+      .result-box {
+        padding: 24px;
+        border-radius: 22px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .toolbar,
+      .progress-card,
+      .result-box,
+      button {
+        display: none !important;
+      }
+
+      .section,
+      .hero-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="eyebrow">questionário inicial</div>
+          <h1>vamos construir sua landing page</h1>
+          <p>Este questionário vai ajudar a organizar as principais informações sobre seus atendimentos, sua forma de trabalho, seu público e o estilo visual desejado para a página.</p>
+        </div>
+
+        <aside class="progress-card">
+          <div class="progress-title">
+            <span>progresso das respostas</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="mini-info">
+            <span>• suas respostas ficam salvas neste navegador</span>
+            <span>• ao finalizar, gere um resumo organizado das informações</span>
+            <span>• responda com calma, sem precisar preencher tudo de uma vez</span>
+          </div>
+        </aside>
+      </section>
+
+      <div class="toolbar">
+        <button class="btn-primary" onclick="generateBriefing()">Gerar resumo das respostas</button>
+        <button class="btn-secondary" onclick="copyBriefing()">Copiar respostas</button>
+        <button class="btn-secondary" onclick="downloadBriefing()">Baixar respostas .txt</button>
+        <button class="btn-secondary" onclick="window.print()">Imprimir / salvar PDF</button>
+        <button class="btn-secondary" onclick="resetForm()">Limpar respostas</button>
+      </div>
+
+      <form id="briefingForm" class="sections">
+        <section class="section">
+          <div class="section-header">
+            <div class="number">1</div>
+            <div>
+              <h2>objetivo da página</h2>
+              <p class="section-desc">Conte qual deve ser o principal papel da sua página.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field full">
+              <div class="label">O que você deseja alcançar com esta página?</div>
+              <div class="options" data-name="Objetivo principal">
+                <label class="chip"><input type="checkbox" name="Objetivo principal" value="Agendar consultas"><span>Agendar consultas</span></label>
+                <label class="chip"><input type="checkbox" name="Objetivo principal" value="Apresentar a profissional"><span>Apresentar a profissional</span></label>
+                <label class="chip"><input type="checkbox" name="Objetivo principal" value="Captar contatos pelo WhatsApp"><span>Captar contatos pelo WhatsApp</span></label>
+                <label class="chip"><input type="checkbox" name="Objetivo principal" value="Divulgar atendimento online"><span>Divulgar atendimento online</span></label>
+                <label class="chip"><input type="checkbox" name="Objetivo principal" value="Divulgar atendimento presencial"><span>Divulgar atendimento presencial</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="acaoPrincipal">O que você espera que a pessoa faça ao acessar a página?</label>
+              <select id="acaoPrincipal" name="O que você espera que a pessoa faça ao acessar a página?">
+                <option value="">Selecione</option>
+                <option>Clicar no WhatsApp</option>
+                <option>Preencher formulário</option>
+                <option>Agendar consulta</option>
+                <option>Conhecer melhor a profissional</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="focoPagina">A página deve ser focada em</label>
+              <select id="focoPagina" name="Foco da página">
+                <option value="">Selecione</option>
+                <option>Um serviço específico</option>
+                <option>Vários serviços</option>
+                <option>Apresentação institucional/profissional</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="meta">Existe algum objetivo específico que você gostaria de alcançar?</label>
+              <textarea id="meta" name="Meta específica" placeholder="Ex.: receber mais mensagens, divulgar o início dos atendimentos, transmitir mais confiança..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">2</div>
+            <div>
+              <h2>público-alvo</h2>
+              <p class="section-desc">Informe quem você deseja atender e como gostaria de se comunicar com esse público.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Para quais públicos você pretende oferecer atendimento?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Adultos"><span>Adultos</span></label>
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Adolescentes"><span>Adolescentes</span></label>
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Casais"><span>Casais</span></label>
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Idosos"><span>Idosos</span></label>
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Mulheres"><span>Mulheres</span></label>
+                <label class="chip"><input type="checkbox" name="Público atendido" value="Famílias"><span>Famílias</span></label>
+              </div>
+            </div>
+            <div class="field full">
+              <div class="label">Quais demandas você gostaria de destacar na página?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Ansiedade"><span>Ansiedade</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Depressão"><span>Depressão</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Autoestima"><span>Autoestima</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Relacionamentos"><span>Relacionamentos</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Luto"><span>Luto</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Estresse"><span>Estresse</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Burnout"><span>Burnout</span></label>
+                <label class="chip"><input type="checkbox" name="Demandas destacadas" value="Autoconhecimento"><span>Autoconhecimento</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="linguagem">Qual tom de comunicação você prefere para a página?</label>
+              <select id="linguagem" name="Qual tom de comunicação você prefere para a página?">
+                <option value="">Selecione</option>
+                <option>Acolhedora</option>
+                <option>Profissional</option>
+                <option>Leve</option>
+                <option>Séria</option>
+                <option>Humanizada</option>
+                <option>Direta</option>
+                <option>Técnica</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="publicoPreferido">Existe algum público que você prefere atender?</label>
+              <input id="publicoPreferido" name="Público preferido" type="text" placeholder="Ex.: adultos jovens, mulheres, casais..." />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">3</div>
+            <div>
+              <h2>informações profissionais</h2>
+              <p class="section-desc">Preencha os dados profissionais que devem aparecer na página.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label for="nomeProfissional">Nome profissional</label>
+              <input id="nomeProfissional" name="Nome profissional" type="text" />
+            </div>
+            <div class="field">
+              <label for="crp">CRP</label>
+              <input id="crp" name="CRP" type="text" placeholder="Ex.: CRP 00/00000" />
+            </div>
+            <div class="field">
+              <label for="abordagem">Abordagem terapêutica</label>
+              <input id="abordagem" name="Abordagem terapêutica" type="text" placeholder="Ex.: TCC, psicanálise, humanista..." />
+            </div>
+            <div class="field">
+              <label for="tempoExperiencia">Tempo de atuação</label>
+              <input id="tempoExperiencia" name="Tempo de atuação" type="text" placeholder="Ex.: iniciando agora, 2 anos..." />
+            </div>
+            <div class="field full">
+              <label for="formacoes">Especializações, cursos ou experiências relevantes</label>
+              <textarea id="formacoes" name="Formações e experiências"></textarea>
+            </div>
+            <div class="field full">
+              <label for="sobre">Breve apresentação profissional</label>
+              <textarea id="sobre" name="Apresentação profissional" placeholder="Conte um pouco sobre sua trajetória, seu estilo de atendimento e seu propósito profissional."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">4</div>
+            <div>
+              <h2>serviços e atendimento</h2>
+              <p class="section-desc">Explique quais atendimentos serão oferecidos e como eles irão funcionar.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Quais tipos de atendimento você irá oferecer?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Psicoterapia individual"><span>Psicoterapia individual</span></label>
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Terapia de casal"><span>Terapia de casal</span></label>
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Atendimento infantil"><span>Atendimento infantil</span></label>
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Atendimento adolescente"><span>Atendimento adolescente</span></label>
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Atendimento adulto"><span>Atendimento adulto</span></label>
+                <label class="chip"><input type="checkbox" name="Serviços oferecidos" value="Orientação profissional"><span>Orientação profissional</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="modalidade">Modalidade</label>
+              <select id="modalidade" name="Modalidade de atendimento">
+                <option value="">Selecione</option>
+                <option>Online</option>
+                <option>Presencial</option>
+                <option>Online e presencial</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="local">Caso tenha atendimento presencial, informe cidade e bairro</label>
+              <input id="local" name="Local do atendimento presencial" type="text" />
+            </div>
+            <div class="field">
+              <label for="duracao">Duração média da sessão</label>
+              <input id="duracao" name="Duração média da sessão" type="text" placeholder="Ex.: 50 minutos" />
+            </div>
+            <div class="field">
+              <label for="valor">O valor da consulta deve aparecer na página?</label>
+              <select id="valor" name="Exibir valor na página">
+                <option value="">Selecione</option>
+                <option>Sim</option>
+                <option>Não, apenas no contato</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="contato">Quais serão as formas de contato ou agendamento?</label>
+              <input id="contato" name="Formas de contato" type="text" placeholder="WhatsApp, Instagram, e-mail, formulário, agenda online..." />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">5</div>
+            <div>
+              <h2>conteúdo e estrutura</h2>
+              <p class="section-desc">Selecione as informações que você gostaria de apresentar na página.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field full">
+              <div class="label">Quais seções você gostaria que a página tivesse?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Apresentação inicial"><span>Apresentação inicial</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Sobre a psicóloga"><span>Sobre a psicóloga</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Áreas de atuação"><span>Áreas de atuação</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Como funciona o atendimento"><span>Como funciona o atendimento</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Benefícios da terapia"><span>Benefícios da terapia</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Perguntas frequentes"><span>Perguntas frequentes</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Contato"><span>Contato</span></label>
+                <label class="chip"><input type="checkbox" name="Seções da página" value="Localização"><span>Localização</span></label>
+              </div>
+            </div>
+            <div class="field full">
+              <label for="fraseTopo">Existe alguma frase principal que você gostaria de destacar no topo?</label>
+              <input id="fraseTopo" name="Frase principal do topo" type="text" placeholder="Ex.: Cuidar da sua saúde emocional também é prioridade." />
+            </div>
+            <div class="field full">
+              <label for="mensagemCentral">Qual mensagem principal a página deve transmitir?</label>
+              <textarea id="mensagemCentral" name="Mensagem central"></textarea>
+            </div>
+            <div class="field full">
+              <label for="problemas">Quais dificuldades do público podem ser mencionadas?</label>
+              <textarea id="problemas" name="Problemas do público"></textarea>
+            </div>
+            <div class="field full">
+              <label for="naoAparecer">Existe alguma informação que você prefere não incluir?</label>
+              <textarea id="naoAparecer" name="Informações que não devem aparecer"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">6</div>
+            <div>
+              <h2>visual e referências</h2>
+              <p class="section-desc">Compartilhe suas preferências visuais para que a página tenha uma estética alinhada ao que você deseja transmitir.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label for="logo">Você já possui logotipo?</label>
+              <select id="logo" name="Possui logotipo">
+                <option value="">Selecione</option>
+                <option>Sim</option>
+                <option>Não</option>
+                <option>Ainda será criado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="fotos">Você possui fotos profissionais para usar na página?</label>
+              <select id="fotos" name="Possui fotos profissionais">
+                <option value="">Selecione</option>
+                <option>Sim</option>
+                <option>Não</option>
+                <option>Vai providenciar</option>
+              </select>
+            </div>
+            <div class="field full">
+              <div class="label">Qual estilo visual combina mais com você?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Clean"><span>Clean</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Sofisticado"><span>Sofisticado</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Acolhedor"><span>Acolhedor</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Minimalista"><span>Minimalista</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Moderno"><span>Moderno</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Feminino"><span>Feminino</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Neutro"><span>Neutro</span></label>
+                <label class="chip"><input type="checkbox" name="Estilo visual" value="Profissional"><span>Profissional</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="coresGostam">Cores que você gosta</label>
+              <input id="coresGostam" name="Cores que gostam" type="text" />
+            </div>
+            <div class="field">
+              <label for="coresNaoGostam">Cores que você não gosta</label>
+              <input id="coresNaoGostam" name="Cores que não gostam" type="text" />
+            </div>
+            <div class="field full">
+              <label for="referencias">Links ou referências visuais que você gosta</label>
+              <textarea id="referencias" name="Referências visuais" placeholder="Cole links de sites, perfis ou descreva estilos que você gosta."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div class="number">7</div>
+            <div>
+              <h2>contato e detalhes técnicos</h2>
+              <p class="section-desc">Defina como as pessoas poderão entrar em contato e quais recursos a página deve ter.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label for="botaoPrincipal">Qual texto você prefere para o botão principal?</label>
+              <select id="botaoPrincipal" name="Texto do botão principal">
+                <option value="">Selecione</option>
+                <option>Agendar consulta</option>
+                <option>Falar no WhatsApp</option>
+                <option>Marcar atendimento</option>
+                <option>Quero iniciar minha terapia</option>
+                <option>Entrar em contato</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="destinoBotao">Para onde o botão principal deve levar?</label>
+              <input id="destinoBotao" name="Destino do botão" type="text" placeholder="WhatsApp, formulário, link de agenda..." />
+            </div>
+            <div class="field full">
+              <label for="mensagemWhats">Qual mensagem automática deve aparecer no WhatsApp?</label>
+              <textarea id="mensagemWhats" name="Mensagem automática do WhatsApp" placeholder="Ex.: Olá, gostaria de saber mais sobre os atendimentos psicológicos."></textarea>
+            </div>
+            <div class="field">
+              <label for="plataforma">Plataforma</label>
+              <select id="plataforma" name="Plataforma">
+                <option value="">Selecione</option>
+                <option>WordPress</option>
+                <option>Elementor</option>
+                <option>Wix</option>
+                <option>Framer</option>
+                <option>Outra</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dominio">Você já possui domínio e hospedagem?</label>
+              <select id="dominio" name="Possui domínio/hospedagem">
+                <option value="">Selecione</option>
+                <option>Sim</option>
+                <option>Não</option>
+                <option>Ainda será contratado</option>
+              </select>
+            </div>
+            <div class="field full">
+              <div class="label">Quais integrações você gostaria de ter?</div>
+              <div class="options">
+                <label class="chip"><input type="checkbox" name="Integrações" value="WhatsApp"><span>WhatsApp</span></label>
+                <label class="chip"><input type="checkbox" name="Integrações" value="Google Maps"><span>Google Maps</span></label>
+                <label class="chip"><input type="checkbox" name="Integrações" value="Instagram"><span>Instagram</span></label>
+                <label class="chip"><input type="checkbox" name="Integrações" value="Formulário"><span>Formulário</span></label>
+                <label class="chip"><input type="checkbox" name="Integrações" value="Google Analytics"><span>Google Analytics</span></label>
+                <label class="chip"><input type="checkbox" name="Integrações" value="Pixel da Meta"><span>Pixel da Meta</span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <section class="result-box">
+        <h2>resumo das respostas</h2>
+        <p class="section-desc">Ao finalizar, clique em “gerar resumo das respostas” para organizar todas as informações preenchidas.</p>
+        <textarea id="output" readonly></textarea>
+      </section>
+
+      <p class="footer-note">Questionário inicial para criação de landing page profissional.</p>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('briefingForm');
+    const output = document.getElementById('output');
+    const storageKey = 'briefingLandingPsicologa';
+
+    function getFormData() {
+      const data = {};
+      const elements = Array.from(form.elements);
+
+      elements.forEach((el) => {
+        if (!el.name) return;
+
+        if (el.type === 'checkbox') {
+          if (!data[el.name]) data[el.name] = [];
+          if (el.checked) data[el.name].push(el.value);
+        } else {
+          data[el.name] = el.value.trim();
+        }
+      });
+
+      return data;
+    }
+
+    function saveForm() {
+      localStorage.setItem(storageKey, JSON.stringify(getFormData()));
+      updateProgress();
+    }
+
+    function loadForm() {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+      const elements = Array.from(form.elements);
+
+      elements.forEach((el) => {
+        if (!el.name || !(el.name in data)) return;
+
+        if (el.type === 'checkbox') {
+          el.checked = Array.isArray(data[el.name]) && data[el.name].includes(el.value);
+        } else {
+          el.value = data[el.name] || '';
+        }
+      });
+
+      updateProgress();
+    }
+
+    function formatValue(value) {
+      if (Array.isArray(value)) return value.length ? value.join(', ') : 'Não informado';
+      return value || 'Não informado';
+    }
+
+    function generateBriefing() {
+      const data = getFormData();
+      const lines = ['RESUMO DAS RESPOSTAS — LANDING PAGE DE PSICOLOGIA', ''];
+
+      Object.entries(data).forEach(([key, value]) => {
+        lines.push(`${key}: ${formatValue(value)}`);
+      });
+
+      output.value = lines.join('\n');
+      saveForm();
+      output.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    async function copyBriefing() {
+      if (!output.value.trim()) generateBriefing();
+      await navigator.clipboard.writeText(output.value);
+      alert('Respostas copiadas!');
+    }
+
+    function downloadBriefing() {
+      if (!output.value.trim()) generateBriefing();
+      const blob = new Blob([output.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'respostas-landing-page-psicologia.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function resetForm() {
+      if (!confirm('Tem certeza que deseja limpar todas as respostas?')) return;
+      form.reset();
+      output.value = '';
+      localStorage.removeItem(storageKey);
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const elements = Array.from(form.elements).filter((el) => el.name && el.type !== 'checkbox');
+      const checkboxGroups = [...new Set(Array.from(form.querySelectorAll('input[type="checkbox"]')).map((el) => el.name))];
+
+      const total = elements.length + checkboxGroups.length;
+      let filled = elements.filter((el) => el.value && el.value.trim() !== '').length;
+
+      checkboxGroups.forEach((name) => {
+        if (form.querySelector(`input[type="checkbox"][name="${CSS.escape(name)}"]:checked`)) filled += 1;
+      });
+
+      const percent = total ? Math.round((filled / total) * 100) : 0;
+      document.getElementById('progressText').textContent = `${percent}%`;
+      document.getElementById('progressFill').style.width = `${percent}%`;
+    }
+
+    form.addEventListener('input', saveForm);
+    form.addEventListener('change', saveForm);
+    window.addEventListener('DOMContentLoaded', loadForm);
+  </script>
+</body>
+</html>
